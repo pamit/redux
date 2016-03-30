@@ -19,7 +19,25 @@ const todo = (state, action) => {
   }
 }
 
-const todos = (state = [], action) => {
+const initialState =
+[
+    {
+        id: 1388534400000,
+        text: "Hey there!",
+        completed: false
+    }
+]
+// const initialState = () => {
+//   // return
+//       [{
+//           id: 1388534400000,
+//           text: "Hey there!",
+//           completed: false
+//       }]
+// }
+
+const todos = (state = initialState, action) => {
+// const todos = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return [

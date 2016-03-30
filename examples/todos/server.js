@@ -21,3 +21,39 @@ app.listen(port, function(error) {
     console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
   }
 })
+
+//////////////////////////////////////////
+var TODOS_FILE = path.join(__dirname, 'todos.json');
+
+app.get('/api/comments', function(req, res) {
+  fs.readFile(COMMENTS_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    res.json(JSON.parse(data));
+  });
+});
+
+app.post('/api/todos', function(req, res) {
+  fs.readFile(TODOS_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    var todos = JSON.parse(data);
+    var newComment = {
+      id: Date.now(),
+      author: req.body.author,
+      text: req.body.text,
+    };
+    todos.push(newComment);
+    fs.writeFile(TODOS_FILE, JSON.stringify(todos, null, 4), function(err) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(todos);
+    });
+  });
+});
