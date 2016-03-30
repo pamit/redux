@@ -6,7 +6,19 @@ import { createStore } from 'redux'
 import todoApp from './reducers'
 import App from './components/App'
 
-let store = createStore(todoApp)
+const initialState = {
+  visibilityFilter: 'SHOW_ALL',
+  todos:
+    [
+        {
+            id: 1388534400000,
+            text: "Hey there!",
+            completed: false
+        }
+    ]
+}
+
+let store = createStore(todoApp, initialState)
 
 render(
   <Provider store={store}>
