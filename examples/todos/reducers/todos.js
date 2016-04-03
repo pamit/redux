@@ -1,48 +1,53 @@
+import React from 'react'
+
 const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false
-      }
-    case 'TOGGLE_TODO':
-      if (state.id !== action.id) {
-        return state
-      }
+    switch (action.type) {
+        case 'ADD_TODO':
+            return {
+                id: action.id,
+                text: action.text,
+                completed: false
+            };
+        case 'TOGGLE_TODO':
+            if (state.id !== action.id) {
+                return state
+            }
 
-      return Object.assign({}, state, {
-        completed: !state.completed
-      })
-    default:
-      return state
-  }
-}
-
-// const initialState =
-// [
-//     {
-//         id: 1388534400000,
-//         text: "Hey there!",
-//         completed: false
-//     }
-// ]
+            return Object.assign({}, state, {
+                completed: !state.completed
+            });
+        default:
+            return state
+    }
+};
 
 const todos = (state = [], action) => {
-// const todos = (state = initialState, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        todo(undefined, action)
-      ]
-    case 'TOGGLE_TODO':
-      return state.map(t =>
-        todo(t, action)
-      )
-    default:
-      return state
-  }
-}
+    // console.log('todo::reducer', action.type)
+
+    switch (action.type) {
+        case 'ADD_TODO':
+            return [
+                ...state,
+                todo(undefined, action)
+            ];
+
+        case 'TOGGLE_TODO':
+            return state.map(t =>
+                todo(t, action)
+            );
+
+        case 'TODO_LIST_FETCH':
+            console.log('todo::reducer::TODO_LIST_FETCH', action.todos);
+            // return Object.assign({}, state, action.todos)
+            // return [...state];
+            return action.todos;
+
+        // case 'TODO_LIST':
+        //     console.log('action.type', 'TODO_LIST');
+
+        default:
+            return state
+    }
+};
 
 export default todos

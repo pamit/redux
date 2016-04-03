@@ -4,7 +4,7 @@ var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.config')
 
 var app = new (require('express'))()
-var port = 3000
+var port = 4000
 
 var compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
@@ -23,10 +23,12 @@ app.listen(port, function(error) {
 })
 
 //////////////////////////////////////////
+var path = require('path');
+var fs = require("fs");
 var TODOS_FILE = path.join(__dirname, 'todos.json');
 
-app.get('/api/comments', function(req, res) {
-  fs.readFile(COMMENTS_FILE, function(err, data) {
+app.get('/api/todos', function(req, res) {
+  fs.readFile(TODOS_FILE, function(err, data) {
     if (err) {
       console.error(err);
       process.exit(1);
@@ -42,12 +44,12 @@ app.post('/api/todos', function(req, res) {
       process.exit(1);
     }
     var todos = JSON.parse(data);
-    var newComment = {
+    var newTodo = {
       id: Date.now(),
       author: req.body.author,
       text: req.body.text,
     };
-    todos.push(newComment);
+    todos.push(newTodo);
     fs.writeFile(TODOS_FILE, JSON.stringify(todos, null, 4), function(err) {
       if (err) {
         console.error(err);

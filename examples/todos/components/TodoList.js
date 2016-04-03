@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Todo from './Todo'
 
 const TodoList = ({ todos, onTodoClick }) => (
+    console.log('TodoList::todos', todos),
   <ul>
     {todos.map(todo =>
       <Todo
